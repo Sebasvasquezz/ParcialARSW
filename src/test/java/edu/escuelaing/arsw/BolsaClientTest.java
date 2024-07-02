@@ -8,19 +8,32 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Client test class for the Bolsa service.
+ * This class provides methods to test the service with simple requests and concurrent requests.
+ */
 public class BolsaClientTest {
 
     private static final String BASE_URL = "http://localhost:8080";
-    private static final String MOVIES_ENDPOINT = BASE_URL + "/data";
+    private static final String DATA_ENDPOINT = BASE_URL + "/data";
 
+     /**
+     * The main method to execute the test methods.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         testSimpleRequest();
         testConcurrency();
     }
 
+    /**
+     * Method to test a simple request to the Bolsa service.
+     * This method makes a GET request to fetch data for a specific function and symbol.
+     */
     private static void testSimpleRequest() {
         try {
-            URL url = new URL(MOVIES_ENDPOINT + "?functionn=TIME_SERIES_WEEKLY&symbol=IBM");
+            URL url = new URL(DATA_ENDPOINT + "?functionn=TIME_SERIES_WEEKLY&symbol=IBM");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
 
@@ -42,6 +55,10 @@ public class BolsaClientTest {
         }
     }
 
+    /**
+     * Method to test concurrent requests to the Bolsa service.
+     * This method creates multiple threads to make simultaneous GET requests.
+     */
     private static void testConcurrency() {
         ExecutorService executorService = Executors.newFixedThreadPool(10); 
 
@@ -49,7 +66,7 @@ public class BolsaClientTest {
             
             executorService.execute(() -> {
                 try {
-                    URL url = new URL(MOVIES_ENDPOINT + "?functionn=TIME_SERIES_WEEKLY&symbol=IBM");
+                    URL url = new URL(DATA_ENDPOINT + "?functionn=TIME_SERIES_WEEKLY&symbol=IBM");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("GET");
 

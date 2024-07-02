@@ -10,7 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+/**
+ * Service class that implements BolsaService to interact with the Alpha Vantage API.
+ * This service provides methods to fetch stock market data and caches the responses.
+ */
 @Service
 public class BolsaAdvantageService implements BolsaService {
 
@@ -22,6 +25,15 @@ public class BolsaAdvantageService implements BolsaService {
 
     private final Map<String, String> cache = new ConcurrentHashMap<>();
 
+
+    /**
+     * Fetches data from the Alpha Vantage API based on the specified function and symbol.
+     * Caches the response to minimize API calls.
+     *
+     * @param functionn The Alpha Vantage function to query.
+     * @param symbol The stock symbol to query.
+     * @return The JSON response from the API as a String.
+     */
     public String getData(String functionn, String symbol) {
         String cacheKey = functionn + "_" + symbol;
 
